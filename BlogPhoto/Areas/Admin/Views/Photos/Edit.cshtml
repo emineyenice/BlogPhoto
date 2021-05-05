@@ -1,0 +1,63 @@
+﻿@model Photo
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Photo</h2>
+
+@using (Html.BeginForm("Edit", "Photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.HiddenFor(x => x.ImagePath)
+        @Html.Hidden("ResmiKaldir", false)
+        <label for="image">Görsel:</label>
+        <div style="margin-bottom:.5rem" id="gorsel">
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="~/Images/Uploads/@Model.ImagePath" alt="@Model.ImagePath" width="100" height="100" /> <br />
+                <a href="#" id="btnResmiKaldir">Resmi Kaldır</a>
+            }
+            else
+            {
+                <i class="fas fa-image" style="font-size:50px; color:gray;"></i>
+            }
+        </div>
+        <input type="file" id="image" name="image" />
+        @Html.ValidationMessage("image")
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.PhotoTitle)
+        @Html.TextBoxFor(x => x.PhotoTitle, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.PhotoTitle)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description)
+        @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.LoadTime)
+        @Html.TextBoxFor(x => x.LoadTime, new { type = "datetime-local", @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.LoadTime)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.HashTagId)
+        @Html.DropDownListFor(x => x.HashTagId, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.HashTagId)
+    </div>
+
+    @Html.HiddenFor(x => x.Id)
+    <button>Kaydet</button>
+}
+@section scripts{
+    <script>
+        $("#btnResmiKaldir").click(function (event) {
+            event.preventDefault();
+            $("#ResmiKaldir").val("true");
+            $("#gorsel").hide();
+        });
+    </script>
+}
+

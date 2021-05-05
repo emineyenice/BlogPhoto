@@ -1,0 +1,61 @@
+﻿@model List<Photo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Photos</h2>
+
+<a href="@Url.Action("Add")">
+    <i class="fas fa-plus"> </i>
+    New Photo
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Photo</th>
+            <th>Photo Title</th>
+            <th>Description</th>
+            <th>LoadTime</th>
+            <th>HashTag</th>
+            <th>Operations</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                    {
+                        <img src="~/Images/Uploads/@item.ImagePath" alt="@item.PhotoTitle" width="50" height="50" />
+                    }
+                    else
+                    {
+                        <i class="fas fa-image" style="font-size:50px; color:gray;"></i>
+                    }
+                </td>
+                <td>@item.PhotoTitle</td>
+                <td>@item.Description</td>
+                <td>@item.LoadTime</td>
+                <td>
+                    @foreach (var hashTag in item.HashTags)
+                    {
+                        <span>#</span>@hashTag.HashTagName
+
+                    }
+                </td>
+                <td>
+                    <form method="post" action="@Url.Action("Delete","Photos")" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,19 @@
+﻿@model HashTag
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "HashTags", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(x => x.HashTagName)
+        @Html.TextBoxFor(x => x.HashTagName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.HashTagName)
+    </div>
+
+    @Html.HiddenFor(x => x.Id)
+    <button>Save</button>
+}

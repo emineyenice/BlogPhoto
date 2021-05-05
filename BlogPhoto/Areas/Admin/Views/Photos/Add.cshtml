@@ -1,0 +1,42 @@
+﻿@model Photo
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2>Add new Photo</h2>
+
+@using (Html.BeginForm("Add", "Photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.PhotoTitle)
+        @Html.TextBoxFor(x => x.PhotoTitle, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.PhotoTitle)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Description)
+        @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.LoadTime)
+        @Html.TextBoxFor(x => x.LoadTime, new { type = "datetime-local", @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.LoadTime)
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("hasTagId",( MultiSelectList)ViewBag.HashTag, new { multiple="multiple", @class ="form-control"})
+       
+        @*@Html.LabelFor(x => x.HashTag)
+        @Html.DropDownListFor(x => x.HashTagId, null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.HashTagId)*@
+    </div>
+
+    <div class="form-group">
+        <label for="resim">Görsel:</label>
+        <input type="file" id="image" name="image" />
+        @Html.ValidationMessage("image")
+    </div>
+    <button>Ekle</button>
+}
+

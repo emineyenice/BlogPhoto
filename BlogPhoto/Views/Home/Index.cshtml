@@ -1,0 +1,23 @@
+﻿@model List<Photo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Photos</h2>
+
+@foreach (var item in Model)
+{
+    <h3 class="card-title logo">@item.PhotoTitle</h3>
+
+    foreach (var hashTag in item.HashTags)
+    {
+        <span>#</span>@hashTag.HashTagName
+
+    }
+    <img src="~/Images/Uploads/@item.ImagePath" alt="@item.PhotoTitle" class="img-responsive" style="width:100%" />
+    <div class="card" style="width: 18rem;">
+        <h5 class="card-title logo"> @item.Description</h5>
+    </div>
+
+}
+

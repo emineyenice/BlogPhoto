@@ -1,0 +1,39 @@
+﻿@model List<HashTag>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>HashTags</h2>
+
+
+<a href="@Url.Action("Add")">
+    <i class="fas fa-plus"> </i>
+    New HashTag
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>HashTag Name</th>
+            <th>Operations</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.HashTagName</td>
+                <td>
+                    <form method="post" action="@Url.Action("Delete","HashTags")" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
